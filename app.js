@@ -10,6 +10,10 @@ import helmet from "helmet";
 // Import the rateLimit module
 import rateLimit from "express-rate-limit";
 
+// Import authorization routes
+import authRouteMiddleware from "./middleware/authRoute.js";
+import authV1Routes from "./routes/v1/auth.js";
+
 // Create an Express application
 const app = express();
 
@@ -63,6 +67,10 @@ app.get('/', (req, res) => {
 
 // Use the routes module
 app.use('/', indexRoutes);
+
+app.use("/api/v1/auth", authV1Routes);
+
+app.use("/api/v1/"/*endpoint goes here*/, authRouteMiddleware, /*route goes here*/); // Authenticated route
 
 // Start the server on port 3000
 app.listen(3000, () => {
