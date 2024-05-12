@@ -24,11 +24,24 @@ const validatePostBasicUser = (req, res, next) => {
             "string.max":"Username should have a maximum length of {#limit}",
             "string.alphanum":"Username should contain alphanumeric characters only"
         }),
-        email: Joi.string().email().unique().messages({
+        email: Joi.string().email().unique().ref('username').messages({
             "string.base":"Email should be a string",
             "string.empty":"Email cannot be empty",
             "string.email":"Email should use valid syntax",
             "string.unique":"Email should be unique",
+        }),
+        // not stolen from here https://stackoverflow.com/questions/19605150/regex-for-password-must-contain-at-least-eight-characters-at-least-one-number-a
+        password: Joi.string.min(8).max(16).pattern("^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,16}$").messages({
+            "string.base":"Password should be a string",
+            "string.empty":"Password cannot be empty",
+            "string.min":"Password should have a minimum length of {#limit}",
+            "string.max":"Password should have a maximum length of {#limit}",
+            "string.pattern":"Password must have at least one letter, one number and one special character"
+        }),
+        confirmPassword: Joi.string.ref('password').messages({
+            "string.base":"Confirm Password should be a string",
+            "string.empty":"Confirm Password cannot be empty",
+            "string.ref":"Password must match"
         })
     })
 }
