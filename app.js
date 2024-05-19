@@ -10,6 +10,8 @@ import helmet from "helmet";
 // Import the rateLimit module
 import rateLimit from "express-rate-limit";
 
+import { validatePostBasicUser } from './middleware/validation.js';
+
 // Import authorization routes
 import authRouteMiddleware from "./middleware/authRoute.js";
 import authV1Routes from "./routes/v1/auth.js";
@@ -72,9 +74,7 @@ app.use('/', indexRoutes);
 
 app.use("/api/v1/auth", authV1Routes);
 
-app.use("/api/v1/"/*endpoint goes here*/, authRouteMiddleware, /*route goes here*/); // Authenticated route
-
-app.use("api/v1/user/", authRouteMiddleware, userV1Routes);
+app.use("api/v1/user/", authRouteMiddleware, validatePostBasicUser, userV1Routes);
 
 // Start the server on port 3000
 app.listen(3000, () => {
