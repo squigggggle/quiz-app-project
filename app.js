@@ -10,6 +10,8 @@ import helmet from "helmet";
 // Import the rateLimit module
 import rateLimit from "express-rate-limit";
 
+import indexRoutes from "./routes/index.js"
+
 // Import authorization routes
 import authRouteMiddleware from "./middleware/authRoute.js";
 import authV1Routes from "./routes/v1/auth.js";
