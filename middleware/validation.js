@@ -42,6 +42,18 @@ const validatePostBasicUser = (req, res, next) => {
             "string.base":"Confirm Password should be a string",
             "string.empty":"Confirm Password cannot be empty",
             "string.ref":"Password must match"
-        })
-    })
-}
+        }),
+    });
+
+    const { error } = userSchema.validate(req.body);
+
+    if (error) {
+        return res.status(400).json({
+            msg: error.details[0].message,
+        });
+    }
+
+    next();
+};
+
+export {validatePostBasicUser};
