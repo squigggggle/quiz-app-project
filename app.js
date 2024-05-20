@@ -1,5 +1,5 @@
 // Import the Express module
-import express from 'express';
+import express, { urlencoded, json } from "express";
 
 // Import the CORS module
 import cors from 'cors';
@@ -20,6 +20,10 @@ import userV1Routes from "./routes/v1/user.js";
 
 // Create an Express application
 const app = express();
+
+app.use(urlencoded({ extended: false }));
+
+app.use(json());
 
 // Use the CORS module
 app.use(cors());
