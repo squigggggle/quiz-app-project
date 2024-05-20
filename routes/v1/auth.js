@@ -5,7 +5,7 @@ import { validatePostBasicUser } from "../../middleware/validation.js";
 
 const router = Router();
 
-router.route("/register").post(register, validatePostBasicUser);
+router.route("/register").post(validatePostBasicUser, register);
 router.route("/login").post(login);
 
 export default router;
