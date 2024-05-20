@@ -14,7 +14,7 @@ const register = async (req, res) => {
     }
 
     // Get the role from the Request's body property
-    const { name, email, password, role } = req.body;
+    const { firstName, lastName, username, email, password, avatar, role } = req.body;
 
     let user = await prisma.user.findUnique({ where: { email } });
 
@@ -35,8 +35,10 @@ const register = async (req, res) => {
      */
     const hashedPassword = await bcryptjs.hash(password, salt);
 
+    const avatarLink = ("https://api.dicebear.com/8.x/lorelei/svg?seed=" + username)
+
     user = await prisma.user.create({
-      data: { name, email, password: hashedPassword, role },
+      data: { firstName, lastName, username, email, password: hashedPassword, avatar: avatarLink, role },
     });
 
 /**
