@@ -14,7 +14,8 @@ const register = async (req, res) => {
     }
 
     // Get the role from the Request's body property
-    const { firstName, lastName, username, email, password, avatar, role } = req.body;
+    const { firstName, lastName, username, email, password, avatar, role } =
+      req.body;
 
     let user = await prisma.user.findUnique({ where: { email } });
 
@@ -22,26 +23,35 @@ const register = async (req, res) => {
       return res.status(200).json({ msg: "User already exists" });
     }
 
-/**
+    /**
      * A salt is random bits added to a password before it is hashed. Salts
      * create unique passwords even if two users have the same passwords
      */
     const salt = await bcryptjs.genSalt();
 
-/**
+    /**
      * Generate a hash for a given string. The first argument
      * is a string to be hashed, i.e., Pazzw0rd123 and the second
      * argument is a salt, i.e., E1F53135E559C253
      */
     const hashedPassword = await bcryptjs.hash(password, salt);
 
-    const avatarLink = ("https://api.dicebear.com/8.x/lorelei/svg?seed=" + username)
+    const avatarLink =
+      "https://api.dicebear.com/8.x/lorelei/svg?seed=" + username;
 
     user = await prisma.user.create({
-      data: { firstName, lastName, username, email, password: hashedPassword, avatar: avatarLink, role },
+      data: {
+        firstName,
+        lastName,
+        username,
+        email,
+        password: hashedPassword,
+        avatar: avatarLink,
+        role,
+      },
     });
 
-/**
+    /**
      * Delete the password property from the user object. It
      * is a less expensive operation than querying the User
      * table to get only user's email and name
@@ -73,9 +83,12 @@ const login = async (req, res) => {
 
     const { email, username, password } = req.body;
 
-    const user = await prisma.user.findFirst({where: {OR: [{email},{username},],},});
+    const user = await prisma.user.findFirst({
+      where: { OR: [{ email }, { username }] },
+    });
 
-    if (!user) return res.status(401).json({ msg: "Invalid username or email" });
+    if (!user)
+      return res.status(401).json({ msg: "Invalid username or email" });
 
     if (
       user.loginAttempts >= MAX_LOGIN_ATTEMPTS &&
@@ -98,9 +111,9 @@ const login = async (req, res) => {
         data: {
           loginAttempts: user.loginAttempts + 1,
           lastLoginAttempt: new Date(),
-        }
-      })  
-          
+        },
+      });
+
       return res.status(401).json({ msg: "Invalid password" });
     }
 
@@ -117,7 +130,7 @@ const login = async (req, res) => {
         name: user.name,
       },
       JWT_SECRET,
-      { expiresIn: JWT_LIFETIME }
+      { expiresIn: JWT_LIFETIME },
     );
 
     await prisma.user.updateMany({
