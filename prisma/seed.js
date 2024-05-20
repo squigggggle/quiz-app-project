@@ -4,6 +4,7 @@ const prisma = new PrismaClient();
 const main = async () => {
   try {
     await prisma.user.create({
+      // apparently you can't seed multiple users at once without some workaround oops
       data: [
         {
           firstName: "John",
