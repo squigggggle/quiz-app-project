@@ -71,11 +71,11 @@ const login = async (req, res) => {
       });
     }
 
-    const { email, password } = req.body;
+    const { email, username, password } = req.body;
 
-    const user = await prisma.user.findUnique({ where: { email } });
+    const user = await prisma.user.findFirst({where: {OR: [{email},{username},],},});
 
-    if (!user) return res.status(401).json({ msg: "Invalid email" });
+    if (!user) return res.status(401).json({ msg: "Invalid username or email" });
 
     if (
       user.loginAttempts >= MAX_LOGIN_ATTEMPTS &&
@@ -93,14 +93,14 @@ const login = async (req, res) => {
     const isPasswordCorrect = await bcryptjs.compare(password, user.password);
 
     if (!isPasswordCorrect) {
-      await prisma.user.update({
-        where: { email },
+      await prisma.user.updateMany({
+        where: { email, username },
         data: {
           loginAttempts: user.loginAttempts + 1,
           lastLoginAttempt: new Date(),
-        },
-      });
-
+        }
+      })  
+          
       return res.status(401).json({ msg: "Invalid password" });
     }
 
@@ -120,8 +120,8 @@ const login = async (req, res) => {
       { expiresIn: JWT_LIFETIME }
     );
 
-    await prisma.user.update({
-      where: { email },
+    await prisma.user.updateMany({
+      where: { email, username },
       data: {
         loginAttempts: 0,
         lastLoginAttempt: null,
