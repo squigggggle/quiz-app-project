@@ -10,7 +10,6 @@ const seedBasicUsers = async (req, res) => {
 
     const user = await prisma.user.findUnique({ where: { id: Number(id) } });
 
-    // TODO: Write an if statement that checks if the user is not an admin user
     if (user.role !== "ADMIN_USER") {
       return res.status(403).json({
         msg: "Not authorized to access this route",
@@ -25,15 +24,15 @@ const seedBasicUsers = async (req, res) => {
       // Set the user's avatar based off their username
       const avatarLink = "https://api.dicebear.com/8.x/lorelei/svg?seed=" + user.username;
       user.avatar = avatarLink;
-      // TODO: Create a salt using bcryptjs.genSaltSync()
+      // Create a salt using bcryptjs.genSaltSync()
       const salt = bcryptjs.genSaltSync();
-      // TODO: Hash the user's password using bcryptjs.hashSync(). Pass in the user's password and the salt
+      // Hash the user's password using bcryptjs.hashSync(). Pass in the user's password and the salt
       const hashedPassword = bcryptjs.hashSync(password, salt);
-      // TODO: Set the user's password to the hashed password
+      // Set the user's password to the hashed password
       user.password = hashedPassword;
     });
 
-    // TODO: Call the createMany method on the Prisma client and pass in the data
+    // Call the createMany method on the Prisma client and pass in the data
     await prisma.user.createMany({
       data: data.data
     })
