@@ -18,6 +18,8 @@ import authV1Routes from "./routes/v1/auth.js";
 
 import userV1Routes from "./routes/v1/user.js";
 
+import seedBasicUsers from "./routes/v1/seed.js";
+
 // Create an Express application
 const app = express();
 
@@ -78,7 +80,9 @@ app.use("/", indexRoutes);
 
 app.use("/api/v1/auth", authV1Routes);
 
-app.use("api/v1/user/", authRouteMiddleware, userV1Routes);
+app.use("/api/v1/user/", authRouteMiddleware, userV1Routes);
+
+app.use("/api/v1/users/seed/basic", seedBasicUsers);
 
 // Start the server on port 3000
 app.listen(3000, () => {
