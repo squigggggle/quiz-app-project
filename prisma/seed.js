@@ -46,22 +46,22 @@ const main = async () => {
     },
   ]
   try {
-    for (const user of data) {
+    data.forEach((user) => {
+      // Set the user's avatar based off their username
       const avatarLink = "https://api.dicebear.com/8.x/lorelei/svg?seed=" + user.username;
+      user.avatar = avatarLink;
+      //Create a salt using bcryptjs.genSaltSync()
       const salt = bcryptjs.genSaltSync();
+      // Hash the user's password using bcryptjs.hashSync(). Pass in the user's password and the salt
       const hashedPassword = bcryptjs.hashSync(user.password, salt);
-      await prisma.user.create({
-        data: {
-          firstName: user.firstName,
-          lastName: user.lastName,
-          username: user.username,
-          email: user.email,
-          avatar: avatarLink,
-          password: hashedPassword,
-          role: user.role,
-        },
-      });
-    };
+      // Set the user's password to the hashed password
+      user.password = hashedPassword;
+    });
+
+    // Call the createMany method on the Prisma client and pass in the data
+    await prisma.user.createMany({
+      data: data
+    })
   } catch (err) {
     console.error(err);
   } finally {
