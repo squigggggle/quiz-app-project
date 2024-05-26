@@ -8,7 +8,7 @@ const seedBasicUsers = async (req, res) => {
   try {
     const { id } = req.user;
 
-    const user = await prisma.user.findUnique({ where: { id: Number(id) } });
+    const user = await prisma.user.findUnique({ where: { id: id } });
 
     if (user.role !== "ADMIN_USER") {
       return res.status(403).json({
@@ -27,7 +27,7 @@ const seedBasicUsers = async (req, res) => {
       // Create a salt using bcryptjs.genSaltSync()
       const salt = bcryptjs.genSaltSync();
       // Hash the user's password using bcryptjs.hashSync(). Pass in the user's password and the salt
-      const hashedPassword = bcryptjs.hashSync(password, salt);
+      const hashedPassword = bcryptjs.hashSync(user.password, salt);
       // Set the user's password to the hashed password
       user.password = hashedPassword;
     });

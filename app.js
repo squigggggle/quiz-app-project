@@ -82,7 +82,7 @@ app.use("/api/v1/auth", authV1Routes);
 
 app.use("/api/v1/user/", authRouteMiddleware, userV1Routes);
 
-app.use("/api/v1/users/seed/basic", seedBasicUsers);
+app.use("/api/v1/user/seed/basic", seedBasicUsers);
 
 // Start the server on port 3000
 app.listen(3000, () => {
