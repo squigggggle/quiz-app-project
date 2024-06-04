@@ -11,8 +11,8 @@ const validatePostQuiz = (req, res, next) => {
     endDate: Joi.date().messages({
 
     }),
-    questions: Joi.array.messages({
-        
+    questions: Joi.array().messages({
+
     }),
   });
 
