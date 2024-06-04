@@ -16,7 +16,7 @@ const validatePostQuiz = (req, res, next) => {
     }),
   });
 
-  const { error } = userSchema.validate(req.body);
+  const { error } = quizSchema.validate(req.body);
 
   if (error) {
     return res.status(400).json({
