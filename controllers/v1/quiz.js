@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import axios from "axios";
 
 const prisma = new PrismaClient();
 
@@ -11,7 +12,7 @@ const createQuiz = async (req, res) => {
       });
     }
     
-    const { name, region, country } = req.body;
+    const { categoryId, name, type, difficulty, startDate, endDate } = req.body;
 
     const { id } = req.user;
 
@@ -19,7 +20,7 @@ const createQuiz = async (req, res) => {
 
     /**
      * If the authenticated user is not an admin, they can
-     * not create a new record
+     * not create a new quiz
      */
     if (user.role !== "ADMIN_USER") {
       return res.status(403).json({
@@ -27,15 +28,48 @@ const createQuiz = async (req, res) => {
       });
     }
 
-    await prisma.quiz.create({
-      data: { name, region, country, userId: id },
+    let quizJson = await axios.get(`https://opentdb.com/api.php?amount=10&category=${categoryId}&type=${type}&difficulty=${difficulty}`);
+    let quizData = quizJson.data.results;
+    let quizArray = Array.isArray(quizData) ? quizData : [];
+    // console.log(quizArray);
+    // for (let i=0; i>=10; i++){
+    //     data: {
+    //       question: quizArray[i].question,
+    //       correctAnswer: quizArray[i].correctAnswer,
+    //       incorrectAnswers: quizArray[i].incorrect_answers,
+    //     }
+    // };
+    const questions = [];
+    quizArray.forEach((quiz) => {
+      questions.push({
+        question: quiz.question,
+        correctAnswer: quiz.correct_answer,
+        incorrectAnswers: quiz.incorrect_answers,
+      });
     });
+    // console.log(questions);
 
-    const newQuizzes = await prisma.quiz.findMany({
-      include: {
-        departments: true,
+    await prisma.quiz.create({
+      data: {
+        categoryId: Number(categoryId),
+        difficulty,
+        name,
+        type,
+        startDate,
+        endDate,
+        questions: {
+          create: questions.map((question) => {
+            return {
+              question: question.question,
+              correctAnswer: question.correctAnswer,
+              incorrectAnswers: question.incorrectAnswers,
+            };
+          }),
+        },
       },
-    });
+    })
+
+    const newQuizzes = await prisma.quiz.findMany({});
 
     return res.status(201).json({
       msg: "Quiz successfully created",
