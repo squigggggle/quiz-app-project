@@ -20,6 +20,8 @@ import userV1Routes from "./routes/v1/user.js";
 
 import quizV1Routes from "./routes/v1/quiz.js"
 
+import seedCategories from "./routes/v1/seed.js";
+
 import seedBasicUsers from "./routes/v1/seed.js";
 
 // Create an Express application
@@ -87,6 +89,8 @@ app.use("/api/v1/user/", authRouteMiddleware, userV1Routes);
 app.use("/api/v1/user/seed/basic", seedBasicUsers);
 
 app.use("/api/v1/quiz/", authRouteMiddleware, quizV1Routes);
+
+app.use("/api/v1/categories", seedCategories)
 
 // Start the server on port 3000
 app.listen(3000, () => {
