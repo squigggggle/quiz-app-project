@@ -1,4 +1,6 @@
 import express from "express";
+import authRouteMiddleware from "../../middleware/authRoute.js";
+import { validatePostQuiz } from "../../middleware/quizValidation.js";
 
 import {
     createQuiz,
@@ -10,10 +12,10 @@ import {
 
 const router = express.Router();
 
-router.post("/", createQuiz)
-router.get("/", getQuiz);
-router.get("/:id", getQuizzes);
-router.put("/:id", updateQuiz);
-router.delete("/:id", deleteQuiz);
+router.post("/", authRouteMiddleware, validatePostQuiz, createQuiz)
+router.get("/", getQuizzes);
+router.get("/:id", getQuiz);
+router.put("/:id", authRouteMiddleware, updateQuiz);
+router.delete("/:id", authRouteMiddleware, deleteQuiz);
 
 export default router;

@@ -84,15 +84,6 @@ app.use(cacheRouteMiddleware);
 
 app.use(compression());
 
-app.get("/api/v1/optimisation", (req, res) => {
-  const text = "See you later, alligator. Bye bye bye, butterfly";
-  res.json({ msg: text.repeat(1000) });
-});
-// Create a GET route
-app.get("/", (req, res) => {
-  res.send("Hello, World!");
-});
-
 // Use the routes module
 app.use("/", indexRoutes);
 
@@ -102,7 +93,7 @@ app.use("/api/v1/user/", authRouteMiddleware, userV1Routes);
 
 app.use("/api/v1/user/seed/basic", seedBasicUsers);
 
-app.use("/api/v1/quiz/", authRouteMiddleware, validatePostQuiz, quizV1Routes);
+app.use("/api/v1/quiz/", quizV1Routes);
 
 app.use("/api/v1/categories", seedCategories)
 
