@@ -10,6 +10,11 @@ import helmet from "helmet";
 // Import the rateLimit module
 import rateLimit from "express-rate-limit";
 
+import compression from "compression";
+
+// Declare this with your other imports
+import cacheRouteMiddleware from "./middleware/cacheRoute.js";
+
 import indexRoutes from "./routes/index.js";
 
 // Import authorization routes
@@ -75,6 +80,14 @@ app.use(setContentSecurityPolicy);
 
 app.use(limiter);
 
+app.use(cacheRouteMiddleware);
+
+app.use(compression());
+
+app.get("/api/v1/optimisation", (req, res) => {
+  const text = "See you later, alligator. Bye bye bye, butterfly";
+  res.json({ msg: text.repeat(1000) });
+});
 // Create a GET route
 app.get("/", (req, res) => {
   res.send("Hello, World!");
