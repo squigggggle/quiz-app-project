@@ -31,14 +31,7 @@ const createQuiz = async (req, res) => {
     let quizJson = await axios.get(`https://opentdb.com/api.php?amount=10&category=${categoryId}&type=${type}&difficulty=${difficulty}`);
     let quizData = quizJson.data.results;
     let quizArray = Array.isArray(quizData) ? quizData : [];
-    // console.log(quizArray);
-    // for (let i=0; i>=10; i++){
-    //     data: {
-    //       question: quizArray[i].question,
-    //       correctAnswer: quizArray[i].correctAnswer,
-    //       incorrectAnswers: quizArray[i].incorrect_answers,
-    //     }
-    // };
+   
     const questions = [];
     quizArray.forEach((quiz) => {
       questions.push({
@@ -47,7 +40,6 @@ const createQuiz = async (req, res) => {
         incorrectAnswers: quiz.incorrect_answers,
       });
     });
-    // console.log(questions);
 
     await prisma.quiz.create({
       data: {
