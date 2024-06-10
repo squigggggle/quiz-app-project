@@ -19,6 +19,7 @@ import authV1Routes from "./routes/v1/auth.js";
 import userV1Routes from "./routes/v1/user.js";
 
 import quizV1Routes from "./routes/v1/quiz.js"
+import { validatePostQuiz } from "./middleware/quizValidation.js";
 
 import seedCategories from "./routes/v1/category.js";
 
@@ -88,7 +89,7 @@ app.use("/api/v1/user/", authRouteMiddleware, userV1Routes);
 
 app.use("/api/v1/user/seed/basic", seedBasicUsers);
 
-app.use("/api/v1/quiz/", authRouteMiddleware, quizV1Routes);
+app.use("/api/v1/quiz/", authRouteMiddleware, validatePostQuiz, quizV1Routes);
 
 app.use("/api/v1/categories", seedCategories)
 
