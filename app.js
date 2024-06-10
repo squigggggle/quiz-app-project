@@ -20,7 +20,7 @@ import userV1Routes from "./routes/v1/user.js";
 
 import quizV1Routes from "./routes/v1/quiz.js"
 
-import seedCategories from "./routes/v1/seed.js";
+import seedCategories from "./routes/v1/category.js";
 
 import seedBasicUsers from "./routes/v1/seed.js";
 
