@@ -16,6 +16,7 @@ const validatePostQuiz = (req, res, next) => {
         "date.base":"Start date should be a valid date",
         "date.min":"Start date should be today or in the future"
     }),
+    // https://stackoverflow.com/questions/76214994/should-be-a-maximum-of-30-days-between-two-dates
     endDate: Joi.date().min(Joi.ref("startDate")).max(Joi.ref("startDate", {
       adjust: (v) => v.getTime() + (5 * 24 * 60 * 60 * 1000),})).messages({
         "date.base":"End date should be a valid date",
