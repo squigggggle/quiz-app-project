@@ -98,9 +98,24 @@ const updateUser = async (req, res) => {
 
 const deleteUser = async (req, res) => {
   try {
+    const { id } = req.user;
+    const currentUser = await prisma.user.findUnique({ where: { id: id } });
+    
     const user = await prisma.user.findUnique({
       where: { id: req.params.id },
     });
+
+    if (currentUser.id == user.id) {
+      return res
+      .status(403)
+      .json({msg: `Deleting your account is not allowed`})
+    }
+
+    if (user.role == "ADMIN_USER") {
+      return res
+      .status(403)
+      .json({msg: `Deleting an admin account is not allowed`})
+    }
 
     if (!user) {
       return res
