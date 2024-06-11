@@ -68,6 +68,12 @@ const updateUser = async (req, res) => {
       where: { id: req.params.id },
     });
 
+    if (user.role == "ADMIN_USER") {
+      return res.status(403).json({
+        msg: "Not authorized to edit admin user information",
+      });
+    }
+
     if (!user) {
       return res
         .status(404)
