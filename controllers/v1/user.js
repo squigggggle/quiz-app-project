@@ -128,7 +128,7 @@ const deleteUser = async (req, res) => {
     });
 
     return res.json({
-      msg: `User with the id: ${req.params.id} successfully deleted`,
+      msg: `User with the username: ${user.username} successfully deleted`,
     });
   } catch (err) {
     return res.status(500).json({
