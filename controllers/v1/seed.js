@@ -47,4 +47,29 @@ const seedBasicUsers = async (req, res) => {
   }
 };
 
-export default seedBasicUsers;
+const seedCategories = async (req, res) => {
+  try {
+    const categoryRowCount = await prisma.category.count();
+    if (categoryRowCount > 0) {
+      return res.status(200).json({
+        msg: "Categories already seeded",
+      });
+    } else {
+      const response = await axios.get("https://opentdb.com/api_category.php");
+      const categories = response.data.trivia_categories;
+      for (let category of categories) {
+        const { id, name } = category;
+        await prisma.category.create({
+          data: { id, name },
+        });
+      }
+      return res.status(200).json({ msg: "Categories successfully seeded" });
+    }
+  } catch (err) {
+    return res.status(500).json({
+      msg: err.message,
+    });
+  }
+ };
+
+export { seedBasicUsers, seedCategories };

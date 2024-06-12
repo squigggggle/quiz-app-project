@@ -10,6 +10,11 @@ import helmet from "helmet";
 // Import the rateLimit module
 import rateLimit from "express-rate-limit";
 
+import compression from "compression";
+
+// Declare this with your other imports
+import cacheRouteMiddleware from "./middleware/cacheRoute.js";
+
 import indexRoutes from "./routes/index.js";
 
 // Import authorization routes
@@ -17,6 +22,11 @@ import authRouteMiddleware from "./middleware/authRoute.js";
 import authV1Routes from "./routes/v1/auth.js";
 
 import userV1Routes from "./routes/v1/user.js";
+
+import quizV1Routes from "./routes/v1/quiz.js"
+import { validatePostQuiz } from "./middleware/quizValidation.js";
+
+import seedCategories from "./routes/v1/category.js";
 
 import seedBasicUsers from "./routes/v1/seed.js";
 
@@ -70,10 +80,9 @@ app.use(setContentSecurityPolicy);
 
 app.use(limiter);
 
-// Create a GET route
-app.get("/", (req, res) => {
-  res.send("Hello, World!");
-});
+app.use(cacheRouteMiddleware);
+
+app.use(compression());
 
 // Use the routes module
 app.use("/", indexRoutes);
@@ -83,6 +92,10 @@ app.use("/api/v1/auth", authV1Routes);
 app.use("/api/v1/user/", authRouteMiddleware, userV1Routes);
 
 app.use("/api/v1/user/seed/basic", seedBasicUsers);
+
+app.use("/api/v1/quiz/", quizV1Routes);
+
+app.use("/api/v1/categories", seedCategories)
 
 // Start the server on port 3000
 app.listen(3000, () => {

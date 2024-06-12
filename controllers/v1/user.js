@@ -68,6 +68,12 @@ const updateUser = async (req, res) => {
       where: { id: req.params.id },
     });
 
+    if (user.role == "ADMIN_USER") {
+      return res.status(403).json({
+        msg: "Not authorized to edit admin user information",
+      });
+    }
+
     if (!user) {
       return res
         .status(404)
@@ -80,7 +86,7 @@ const updateUser = async (req, res) => {
     });
 
     return res.json({
-      msg: `User with the id: ${req.params.id} successfully updated`,
+      msg: `User with the username: ${user.username} successfully updated`,
       data: user,
     });
   } catch (err) {
@@ -92,9 +98,24 @@ const updateUser = async (req, res) => {
 
 const deleteUser = async (req, res) => {
   try {
+    const { id } = req.user;
+    const currentUser = await prisma.user.findUnique({ where: { id: id } });
+    
     const user = await prisma.user.findUnique({
       where: { id: req.params.id },
     });
+
+    if (currentUser.id == user.id) {
+      return res
+      .status(403)
+      .json({msg: `Deleting your account is not allowed`})
+    }
+
+    if (user.role == "ADMIN_USER") {
+      return res
+      .status(403)
+      .json({msg: `Deleting an admin account is not allowed`})
+    }
 
     if (!user) {
       return res
@@ -107,7 +128,7 @@ const deleteUser = async (req, res) => {
     });
 
     return res.json({
-      msg: `User with the id: ${req.params.id} successfully deleted`,
+      msg: `User with the username: ${user.username} successfully deleted`,
     });
   } catch (err) {
     return res.status(500).json({
