@@ -1,4 +1,5 @@
 import InfoCard from "./InfoCard";
+import Navigation from "./components/Navigation";
 
 const App = () => {
   const data = [
@@ -22,7 +23,8 @@ const App = () => {
 
   return (
     <>
-      {data.map((api, index) => (
+      <Navigation />
+      {/* {data.map((api, index) => (
         <InfoCard
           key={index}
           title={api.title}
@@ -32,7 +34,7 @@ const App = () => {
           requestBody={api.requestBody}
           responseBody={api.responseBody}
         />
-      ))}
+      ))} */}
     </>
   );
 };
