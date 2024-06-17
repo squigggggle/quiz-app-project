@@ -87,7 +87,7 @@ const RegisterForm = () => {
         />
         <label htmlFor="register-confirmPassword">Confirm Password</label>
         <input 
-            type="text"
+            type="password"
             id="register-confirmPassword"
             name="confirmPassword" 
             {...registerForm.register("confirmPassword")}
