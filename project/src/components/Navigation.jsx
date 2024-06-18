@@ -20,30 +20,37 @@ const Navigation = () => {
       <NavigationMenu>
         <NavigationMenuList>
           <NavigationMenuItem>
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              <a href="/">Home</a>
+            <NavigationMenuLink className={navigationMenuTriggerStyle()} href="/">
+              Home
             </NavigationMenuLink>
           </NavigationMenuItem>
           <NavigationMenuItem>
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-            <a href="/register">Register</a>
+            <NavigationMenuLink className={navigationMenuTriggerStyle()} href="/register">
+              Register
             </NavigationMenuLink>
           </NavigationMenuItem>
           <NavigationMenuItem>
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-            <a href="/login">Login</a>
+            <NavigationMenuLink className={navigationMenuTriggerStyle()} href="/login">
+              Login
             </NavigationMenuLink>
           </NavigationMenuItem>
           <NavigationMenuItem>
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-            <a href="/docs">Documentation</a>
+            <NavigationMenuLink className={navigationMenuTriggerStyle()} href="/quiz">
+              Quiz
+            </NavigationMenuLink>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+            <NavigationMenuLink className={navigationMenuTriggerStyle()} href="/docs">
+              Documentation
             </NavigationMenuLink>
           </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>
       <Routes>
+        <Route path="/" element />
         <Route path="/register" element={<RegisterForm/>} />
         <Route path="/login" element={<LoginForm />} />
+        <Route path="/quiz" element />
         <Route path="/docs" element />
       </Routes>
     </Router>
