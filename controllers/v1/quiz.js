@@ -76,7 +76,11 @@ const createQuiz = async (req, res) => {
 
 const getQuizzes = async (req, res) => {
   try {
-    const quizzes = await prisma.quiz.findMany();
+    const quizzes = await prisma.quiz.findMany({
+      include:{
+        questions:true
+      }
+    });
 
     if (quizzes.length === 0) {
       return res.status(404).json({ msg: "No quizzes found" });
@@ -94,6 +98,9 @@ const getQuiz = async (req, res) => {
   try {
     const quiz = await prisma.quiz.findUnique({
       where: { id: Number(req.params.id) },
+      include: {
+        questions:true
+      }
     });
 
     if (!quiz) {
