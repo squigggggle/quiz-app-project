@@ -40,18 +40,18 @@ const Navigation = () => {
             </NavigationMenuLink>
           </NavigationMenuItem>
           <NavigationMenuItem>
-            <NavigationMenuLink className={navigationMenuTriggerStyle()} href="/docs">
-              Documentation
+            <NavigationMenuLink className={navigationMenuTriggerStyle()} href="/profile">
+              Profile
             </NavigationMenuLink>
           </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>
       <Routes>
         <Route path="/" element />
-        <Route path="/register" element={<RegisterForm/>} />
+        <Route path="/register" element={<RegisterForm />} />
         <Route path="/login" element={<LoginForm />} />
         <Route path="/quiz" element />
-        <Route path="/docs" element />
+        <Route path="/profile" element />
       </Routes>
     </Router>
   );
