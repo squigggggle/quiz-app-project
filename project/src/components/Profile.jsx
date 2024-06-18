@@ -18,7 +18,10 @@ const Profile = () => {
   return (
     <>
       {userData.msg ? (
-        <div>{userData.msg}</div>
+        <div>
+            <h2>No user is logged in</h2>
+            <p>{userData.msg}</p>
+        </div>
       ) : (
         <>
           <h1>Profile</h1>
