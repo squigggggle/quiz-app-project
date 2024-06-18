@@ -13,6 +13,7 @@ import {
 
 import LoginForm from "./forms/LoginForm"
 import RegisterForm from "./forms/RegisterForm"
+import Quiz from "./Quiz";
 
 const Navigation = () => {
   return (
@@ -50,7 +51,7 @@ const Navigation = () => {
         <Route path="/" element />
         <Route path="/register" element={<RegisterForm />} />
         <Route path="/login" element={<LoginForm />} />
-        <Route path="/quiz" element />
+        <Route path="/quiz" element={<Quiz />}/>
         <Route path="/profile" element />
       </Routes>
     </Router>
