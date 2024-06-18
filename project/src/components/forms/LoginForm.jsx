@@ -1,5 +1,4 @@
 import { queryClient } from "../../main";
-
 import { useForm } from "react-hook-form";
 import { useQuery, useMutation } from "@tanstack/react-query";
 
@@ -32,7 +31,7 @@ const LoginForm = () => {
         return res.json();
       }),
     onSuccess: (data) => {
-      localStorage.setItem("token", data.token);
+      localStorage.setItem("token", "Bearer " + data.token);
       queryClient.invalidateQueries("userData");
     },
   });
