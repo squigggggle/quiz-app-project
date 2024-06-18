@@ -19,14 +19,17 @@ const Profile = () => {
     <>
       {userData.msg ? (
         <div>
-            <h2>No user is logged in</h2>
-            <p>{userData.msg}</p>
+          <h2>No user is logged in</h2>
+          <p>{userData.msg}</p>
         </div>
       ) : (
         <>
           <h1>Profile</h1>
           <p>Username: {userData.data.username}</p>
           <p>Email: {userData.data.email}</p>
+          {userData.data.role == "ADMIN_USER" ? (
+            <p>you are admin woww</p>
+          ) : null}
         </>
       )}
     </>
