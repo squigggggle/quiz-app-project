@@ -2,18 +2,37 @@ import { useQuery } from "@tanstack/react-query";
 import QuizCard from "./QuizCard";
 
 const Quiz = () => {
-  const { isLoading, data: quizData } = useQuery({
+  const { isLoading: quizLoading, data: quizData } = useQuery({
     queryKey: ["quizData"],
     queryFn: () =>
       fetch(
         "https://s1-24-id608001-project-squigggggle.onrender.com/api/v1/quiz",
-      ).then((res) => res.json()),
+      ).then((res1) => res1.json()),
   });
 
-  if (isLoading) return "Loading...";
+  const token = localStorage.getItem('token');
+
+  const { isLoading: userLoading, data: userData } = useQuery({
+    queryKey: ["userData"],
+    queryFn: () =>
+      fetch(
+        "https://s1-24-id608001-project-squigggggle.onrender.com/api/v1/user/current",
+        {
+          headers: {
+            Authorization: `${localStorage.getItem("token")}`,
+          },
+        },
+      ).then((res2) => res2.json()),
+      enabled: !!token && !quizLoading && !!quizData,
+  });
+ 
+
+  if (quizLoading) return "Loading quizzes...";
+  if (userLoading) return "Loading user information..."
 
   return (
     <>
+      {userData ? (userData.data.role == "ADMIN_USER" ? <p>you are admin woww</p> : null) : null}
       {quizData.msg ? (
         <div>{quizData.msg}</div>
       ) : (
