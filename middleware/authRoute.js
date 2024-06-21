@@ -47,8 +47,13 @@ const authRoute = (req, res, next) => {
     // Call the next middleware in the stack
     return next();
   } catch (err) {
-    return res.status(403).json({
-      msg: "Not authorized to access this route",
+    if (err.name === 'JsonWebTokenError') {
+      return res.status(403).json({
+        msg: "Not authorized to access this route",
+      });
+    }
+    return res.status(500).json({
+      msg: "Internal server error",
     });
   }
 };
