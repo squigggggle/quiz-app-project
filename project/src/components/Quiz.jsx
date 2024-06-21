@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { useState, useEffect } from "react";
 import QuizCard from "./QuizCard";
 
 const Quiz = () => {
@@ -12,6 +13,8 @@ const Quiz = () => {
 
   const token = localStorage.getItem('token');
 
+  const [querySucceeded, setQuerySucceeded] = useState(false);
+
   const { isLoading: userLoading, data: userData } = useQuery({
     queryKey: ["userData"],
     queryFn: () =>
@@ -22,17 +25,35 @@ const Quiz = () => {
             Authorization: `${localStorage.getItem("token")}`,
           },
         },
-      ).then((res2) => res2.json()),
+      ).then((res2) => {
+        if (!res2.ok) {
+          // Check if response indicates token expired or invalid
+          if (res2.status === 401) {
+            // Clear token from localStorage
+            localStorage.removeItem("token");
+          }
+          throw new Error('Failed to fetch user data');
+        }
+        return res2.json();
+      }),
       enabled: !!token && !quizLoading && !!quizData,
   });
- 
+
+  useEffect(() => {
+    // Check if userData is defined and not loading to determine success
+    if (!userLoading && userData) {
+      setQuerySucceeded(true);
+    }
+  }, [userLoading, userData]);
+
 
   if (quizLoading) return "Loading quizzes...";
   if (userLoading) return "Loading user information..."
 
   return (
     <>
-      {userData ? (userData.data.role == "ADMIN_USER" ? <p>you are admin woww</p> : null) : null}
+    {querySucceeded ? (userData.data.role == "ADMIN_USER" ? <p>you are admin woww</p> : null) : null}
+      {/* {userData ? (userData.data.role == "ADMIN_USER" ? <p>you are admin woww</p> : null) : null} */}
       {quizData.msg ? (
         <div>{quizData.msg}</div>
       ) : (
