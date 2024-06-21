@@ -32,7 +32,7 @@ const Quiz = () => {
 
   return (
     <>
-    {userData ? (userData.data.role == "ADMIN_USER" ? <p>you are admin woww</p> : null) : null}
+    {userData && userData.data ? (userData.data.role == "ADMIN_USER" ? <p>you are admin woww</p> : null ) : null}
       {quizData.msg ? (
         <div>{quizData.msg}</div>
       ) : (
