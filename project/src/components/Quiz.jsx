@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useState, useEffect } from "react";
 import QuizCard from "./QuizCard";
+import QuizForm from "./forms/QuizForm";
 
 const Quiz = () => {
   const { isLoading: quizLoading, data: quizData } = useQuery({
@@ -32,7 +33,7 @@ const Quiz = () => {
 
   return (
     <>
-    {userData && userData.data ? (userData.data.role == "ADMIN_USER" ? <p>you are admin woww</p> : null ) : null}
+    {userData && userData.data ? (userData.data.role == "ADMIN_USER" ? <QuizForm /> : null ) : null}
       {quizData.msg ? (
         <div>{quizData.msg}</div>
       ) : (
