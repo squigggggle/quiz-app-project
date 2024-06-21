@@ -31,15 +31,6 @@ const authRoute = (req, res, next) => {
      */
     const payload = jwt.verify(token, process.env.JWT_SECRET);
 
-    const currentTimestamp = Math.floor(Date.now() / 1000); // in seconds
-    console.log(payload.exp);
-    console.log(currentTimestamp);
-    if (payload.exp <= currentTimestamp) {
-      console.log("Token expired");
-      return res.status(401).json({
-        msg: "Token expired",
-      });
-    }
 
     // Set Request's user property to the authenticated user
     req.user = payload;
@@ -47,13 +38,8 @@ const authRoute = (req, res, next) => {
     // Call the next middleware in the stack
     return next();
   } catch (err) {
-    if (err.name === 'JsonWebTokenError') {
-      return res.status(403).json({
-        msg: "Not authorized to access this route",
-      });
-    }
-    return res.status(500).json({
-      msg: "Internal server error",
+    return res.status(403).json({
+      msg: "Not authorized to access this route",
     });
   }
 };
