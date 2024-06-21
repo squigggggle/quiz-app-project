@@ -31,6 +31,16 @@ const authRoute = (req, res, next) => {
      */
     const payload = jwt.verify(token, process.env.JWT_SECRET);
 
+    const currentTimestamp = Math.floor(Date.now() / 1000); // in seconds
+    console.log(payload.exp);
+    console.log(currentTimestamp);
+    if (payload.exp <= currentTimestamp) {
+      console.log("Token expired");
+      return res.status(401).json({
+        msg: "Token expired",
+      });
+    }
+
     // Set Request's user property to the authenticated user
     req.user = payload;
 
