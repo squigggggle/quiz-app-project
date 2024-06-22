@@ -24,7 +24,6 @@ import authV1Routes from "./routes/v1/auth.js";
 import userV1Routes from "./routes/v1/user.js";
 
 import quizV1Routes from "./routes/v1/quiz.js"
-import { validatePostQuiz } from "./middleware/quizValidation.js";
 
 import categoriesV1Routes from "./routes/v1/category.js";
 
