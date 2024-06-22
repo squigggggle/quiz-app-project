@@ -10,7 +10,7 @@ const QuizForm = () => {
         queryKey: ["categoryData"],
         queryFn: () =>
             fetch(
-                "https://opentdb.com/api_category.php",
+                `${API_URL}/api/v1/categories`,
             ).then((res) => res.json()),
     })
 
