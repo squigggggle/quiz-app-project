@@ -96,7 +96,7 @@ const getQuizzes = async (req, res) => {
 
 const pastQuizzes = async (req, res) => {
   try {
-    const currentDate = new Date();
+    const currentDate = new Date().toISOString();
 
     const pastQuizzes = await prisma.quiz.findMany({
       where: {
@@ -123,7 +123,7 @@ const pastQuizzes = async (req, res) => {
 
 const currentQuizzes = async (req, res) => {
   try {
-    const currentDate = new Date();
+    const currentDate = new Date().toISOString();
 
     const currentQuizzes = await prisma.quiz.findMany({
       where: {
@@ -153,7 +153,7 @@ const currentQuizzes = async (req, res) => {
 
 const futureQuizzes = async (req, res) => {
   try {
-    const currentDate = new Date();
+    const currentDate = new Date().toISOString();
 
     const futureQuizzes = await prisma.quiz.findMany({
       where: {
