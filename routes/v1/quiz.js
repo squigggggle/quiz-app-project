@@ -17,12 +17,12 @@ const router = express.Router();
 
 router.post("/", authRouteMiddleware, validatePostQuiz, createQuiz)
 router.get("/", getQuizzes);
+router.get("/past", pastQuizzes);
+router.get("/future", futureQuizzes);
+router.get("/current", currentQuizzes);
 router.get("/:id", getQuiz);
 router.put("/:id", authRouteMiddleware, updateQuiz);
 router.delete("/:id", authRouteMiddleware, deleteQuiz);
 
-router.get("/past", pastQuizzes);
-router.get("/current", currentQuizzes);
-router.get("/future", futureQuizzes);
 
 export default router;
