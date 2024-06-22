@@ -66,8 +66,14 @@ const updateUser = async (req, res) => {
       });
     }
 
+    let id = req.params.id;
+
+    if(!id) {
+      id = req.user.id;
+    }
+
     let user = await prisma.user.findUnique({
-      where: { id: req.params.id },
+      where: { id: id },
     });
 
     if (user.role == "ADMIN_USER") {
@@ -79,11 +85,11 @@ const updateUser = async (req, res) => {
     if (!user) {
       return res
         .status(404)
-        .json({ msg: `No user with the id: ${req.params.id} found` });
+        .json({ msg: `No user with the id: ${id} found` });
     }
 
     user = await prisma.user.update({
-      where: { id: req.params.id },
+      where: { id: id },
       data: { ...req.body },
     });
 
