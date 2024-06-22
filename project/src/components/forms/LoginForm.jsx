@@ -72,7 +72,6 @@ const LoginForm = () => {
       <button
         onClick={() => {
           localStorage.removeItem("token");
-          queryClient.invalidateQueries("institutionData");
         }}
       >
         Logout
