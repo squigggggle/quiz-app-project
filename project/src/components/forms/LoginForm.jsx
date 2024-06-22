@@ -2,13 +2,15 @@ import { queryClient } from "../../main";
 import { useForm } from "react-hook-form";
 import { useQuery, useMutation } from "@tanstack/react-query";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const LoginForm = () => {
   const loginForm = useForm();
 
   const { mutate: postLoginMutation, data: loginData } = useMutation({
     mutationFn: (user) =>
       fetch(
-        "https://s1-24-id608001-project-squigggggle.onrender.com/api/v1/auth/login",
+        `${API_URL}/api/v1/auth/login`,
         {
           method: "POST",
           headers: {

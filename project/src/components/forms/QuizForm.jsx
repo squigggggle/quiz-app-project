@@ -3,6 +3,8 @@ import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const QuizForm = () => {
     const {isLoading: categoryLoading, data: categoryData } = useQuery({
         queryKey: ["categoryData"],
@@ -17,7 +19,7 @@ const QuizForm = () => {
     const { mutate: postQuizMutation, data: quizData } = useMutation({
         mutationFn: (quiz) =>
         fetch(
-            "https://s1-24-id608001-project-squigggggle.onrender.com/api/v1/quiz", 
+            `${API_URL}/api/v1/quiz`, 
             {
                 method: "POST",
                 headers: {

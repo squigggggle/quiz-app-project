@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import QuizCard from "./QuizCard";
 import QuizForm from "./forms/QuizForm";
 
-const API_URL = process.env.REACT_APP_API_URL;
+const API_URL = import.meta.env.VITE_API_URL;
 
 const Quiz = () => {
   const { isLoading: quizLoading, data: quizData } = useQuery({
@@ -14,7 +14,7 @@ const Quiz = () => {
       ).then((res1) => res1.json()),
   });
 
-  const token = localStorage.getItem('token');
+
 
   const { isLoading: userLoading, data: userData } = useQuery({
     queryKey: ["userData"],
@@ -23,11 +23,11 @@ const Quiz = () => {
         `${API_URL}/api/v1/user/current`,
         {
           headers: {
-            Authorization: token,
+            Authorization: `${localStorage.getItem("token")}`,
           },
         },
       ).then((res2) => res2.json()),
-      enabled: !!token && !quizLoading && !!quizData,
+      enabled: !!`${localStorage.getItem("token")}` && !quizLoading && !!quizData,
   });
 
   if (quizLoading) return "Loading quizzes...";

@@ -3,13 +3,15 @@ import { queryClient } from "../../main";
 import { useForm } from "react-hook-form";
 import { useQuery, useMutation } from "@tanstack/react-query";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const RegisterForm = () => {
   const registerForm = useForm();
 
   const { mutate: postRegisterMutation, data: registerData } = useMutation({
     mutationFn: (user) =>
       fetch(
-        "https://s1-24-id608001-project-squigggggle.onrender.com/api/v1/auth/register",
+        `${API_URL}/api/v1/auth/register`,
         {
           method: "POST",
           headers: {

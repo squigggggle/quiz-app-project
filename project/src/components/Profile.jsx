@@ -1,11 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const Profile = () => {
   const { isLoading, data: userData } = useQuery({
     queryKey: ["userData"],
     queryFn: () =>
       fetch(
-        "https://s1-24-id608001-project-squigggggle.onrender.com/api/v1/user/current",
+        `${API_URL}/api/v1/user/current`,
         {
           headers: {
             Authorization: `${localStorage.getItem("token")}`,
