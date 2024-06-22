@@ -21,7 +21,7 @@ const Profile = () => {
     <>
       {userData.msg ? (
         <div>
-          <h2>No user is logged in</h2>
+          {/* <h2>No user is logged in</h2> */}
           <p>{userData.msg}</p>
         </div>
       ) : (
