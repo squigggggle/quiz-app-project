@@ -8,11 +8,6 @@ const getUsers = async (req, res) => {
 
     const user = await prisma.user.findUnique({ where: { id: id } });
 
-    /**
-     * If the authenticated user is not an admin, they can
-     * not create a new record
-     */
-
     if (user.role !== "ADMIN_USER") {
       return res.status(403).json({
         msg: "Not authorized to access this route",
@@ -35,16 +30,20 @@ const getUsers = async (req, res) => {
 
 const getUser = async (req, res) => {
   try {
-    const { id } = req.user;
+    let id = req.params.id;
 
-    const user = await prisma.user.findUnique({
+    if(!id) {
+      id = req.user.id;
+    }
+
+    let user = await prisma.user.findUnique({
       where: { id: id },
     });
 
     if (!user) {
       return res
         .status(404)
-        .json({ msg: `No user with the id: ${req.params.id} found` });
+        .json({ msg: `No user with the id: ${id} found` });
     }
 
     return res.json({
