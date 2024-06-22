@@ -31,15 +31,22 @@ const authRoute = (req, res, next) => {
      */
     const payload = jwt.verify(token, process.env.JWT_SECRET);
 
+
     // Set Request's user property to the authenticated user
     req.user = payload;
 
     // Call the next middleware in the stack
     return next();
   } catch (err) {
-    return res.status(403).json({
-      msg: "Not authorized to access this route",
-    });
+    if (err.name === 'TokenExpiredError') {
+      return res.status(401).json({
+        msg: 'Token expired, please log in again',
+      });
+    } else {
+      return res.status(403).json({
+        msg: 'Not authorized to access this route',
+      });
+    }
   }
 };
 

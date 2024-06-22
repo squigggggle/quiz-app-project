@@ -26,7 +26,7 @@ import userV1Routes from "./routes/v1/user.js";
 import quizV1Routes from "./routes/v1/quiz.js"
 import { validatePostQuiz } from "./middleware/quizValidation.js";
 
-import seedCategories from "./routes/v1/category.js";
+import categoriesV1Routes from "./routes/v1/category.js";
 
 import seedBasicUsers from "./routes/v1/seed.js";
 
@@ -68,9 +68,9 @@ const setContentSecurityPolicy = helmet({
 });
 
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
+  windowMs: 5 * 60 * 1000, // 15 minutes
   max: 100, // Limit each IP to 100 requests per windowMs
-  message: "Too many requests from this IP, please try again in 15 minutes",
+  message: "Too many requests from this IP, please try again in 5 minutes",
 });
 
 app.use(setXPoweredBy);
@@ -95,7 +95,7 @@ app.use("/api/v1/user/seed/basic", seedBasicUsers);
 
 app.use("/api/v1/quiz/", quizV1Routes);
 
-app.use("/api/v1/categories", seedCategories)
+app.use("/api/v1/categories", categoriesV1Routes)
 
 // Start the server on port 3000
 app.listen(3000, () => {

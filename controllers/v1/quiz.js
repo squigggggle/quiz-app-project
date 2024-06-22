@@ -76,7 +76,12 @@ const createQuiz = async (req, res) => {
 
 const getQuizzes = async (req, res) => {
   try {
-    const quizzes = await prisma.quiz.findMany();
+    const quizzes = await prisma.quiz.findMany({
+      include:{
+        questions:true,
+        category:true,
+      }
+    });
 
     if (quizzes.length === 0) {
       return res.status(404).json({ msg: "No quizzes found" });
@@ -90,10 +95,101 @@ const getQuizzes = async (req, res) => {
   }
 };
 
+const pastQuizzes = async (req, res) => {
+  try {
+    const currentDate = new Date().toISOString();
+
+    const pastQuizzes = await prisma.quiz.findMany({
+      where: {
+        endDate: {
+          lt: currentDate,
+        },
+      },
+      include:{
+        questions:true,
+        category:true
+      }
+    });
+
+    if (pastQuizzes.length === 0) {
+      return res.status(404).json({msg: "No quizzes found" });
+    }
+
+    return res.json({data: pastQuizzes})
+  } catch(err){
+    return res.status(500).json({
+      msg: err.message,
+    });
+  }
+}
+
+const currentQuizzes = async (req, res) => {
+  try {
+    const currentDate = new Date().toISOString();
+
+    const currentQuizzes = await prisma.quiz.findMany({
+      where: {
+        startDate: {
+          gte: currentDate,
+        },
+        endDate: {
+          lte: currentDate,
+        },
+      },
+      include:{
+        questions:true,
+        category:true,
+      }
+    });
+
+    if (currentQuizzes.length === 0) {
+      return res.status(404).json({msg: "No quizzes found" });
+    }
+
+    return res.json({data: currentQuizzes})
+  } catch(err){
+    return res.status(500).json({
+      msg: err.message,
+    });
+  }
+}
+
+const futureQuizzes = async (req, res) => {
+  try {
+    const currentDate = new Date().toISOString();
+
+    const futureQuizzes = await prisma.quiz.findMany({
+      where: {
+        endDate: {
+          gt: currentDate,
+        },
+      },
+      include:{
+        questions:true,
+        category:true,
+      }
+    });
+
+    if (futureQuizzes.length === 0) {
+      return res.status(404).json({msg: "No quizzes found" });
+    }
+
+    return res.json({data: futureQuizzes})
+  } catch(err){
+    return res.status(500).json({
+      msg: err.message,
+    });
+  }
+}
+
 const getQuiz = async (req, res) => {
   try {
     const quiz = await prisma.quiz.findUnique({
       where: { id: Number(req.params.id) },
+      include: {
+        questions:true,
+        category:true,
+      }
     });
 
     if (!quiz) {
@@ -193,4 +289,7 @@ export {
   getQuiz,
   updateQuiz,
   deleteQuiz,
+  pastQuizzes,
+  currentQuizzes,
+  futureQuizzes,
 };
