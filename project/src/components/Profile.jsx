@@ -1,8 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
+
+import UpdateForm from "./forms/UpdateUserForm";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
 const Profile = () => {
+  const [isOpen, setIsOpen] = useState(false);
   const { isLoading, data: userData } = useQuery({
     queryKey: ["userData"],
     queryFn: () =>
@@ -15,16 +19,20 @@ const Profile = () => {
         },
       ).then((res) => res.json()),
   });
+
+  const toggleUpdate = () => {
+    setIsOpen(!isOpen);
+  }
+
   if (isLoading) return "Loading...";
 
   return (
     <>
       {userData.msg ? (
         <div>
-          {/* <h2>No user is logged in</h2> */}
           <p>{userData.msg}</p>
         </div>
-      ) : (
+      ) : isOpen ? <UpdateForm /> : (
         <>
           <h1>Profile</h1>
           <p>Username: {userData.data.username}</p>
@@ -34,6 +42,9 @@ const Profile = () => {
           ) : null}
         </>
       )}
+      <div>
+        <button onClick={toggleUpdate}>Update Profile</button>
+      </div>
     </>
   );
 };
