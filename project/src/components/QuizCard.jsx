@@ -17,6 +17,7 @@ const QuizCard = (props) => {
           <CardDescription>Type: {props.type}</CardDescription>
         </CardHeader>
         <CardContent>
+          {props.category}
         </CardContent>
         <CardFooter>
             <ul>

@@ -11,10 +11,8 @@ const Quiz = () => {
     queryFn: () =>
       fetch(
         `${API_URL}/api/v1/quiz`,
-      ).then((res1) => res1.json()),
+      ).then((res) => res.json()),
   });
-
-
 
   const { isLoading: userLoading, data: userData } = useQuery({
     queryKey: ["userData"],
@@ -26,16 +24,16 @@ const Quiz = () => {
             Authorization: `${localStorage.getItem("token")}`,
           },
         },
-      ).then((res2) => res2.json()),
-      enabled: !!`${localStorage.getItem("token")}` && !quizLoading && !!quizData,
+      ).then((res) => res.json()),
+    enabled: !!`${localStorage.getItem("token")}` && !quizLoading && !!quizData,
   });
 
   if (quizLoading) return "Loading quizzes...";
-  if (userLoading) return "Loading user information..."
+  if (userLoading) return "Loading user information...";
 
   return (
     <>
-      {userData && userData.data ? (userData.data.role == "ADMIN_USER" ? <QuizForm /> : null ) : userData && userData.msg ? <p>{userData.msg}</p> : null}
+      {userData?.data ? (userData.data.role == "ADMIN_USER" ? <QuizForm /> : null) : userData?.msg === "No token provided" ? null : <p>{userData.msg}</p>}
       {quizData.msg ? (
         <div>{quizData.msg}</div>
       ) : (
@@ -47,6 +45,7 @@ const Quiz = () => {
             type={quiz.type}
             startdate={quiz.startDate}
             enddate={quiz.endDate}
+            category={quiz.category.name}
           />
         ))
       )}
