@@ -3,12 +3,14 @@ import { useState, useEffect } from "react";
 import QuizCard from "./QuizCard";
 import QuizForm from "./forms/QuizForm";
 
+const API_URL = process.env.API_URL;
+
 const Quiz = () => {
   const { isLoading: quizLoading, data: quizData } = useQuery({
     queryKey: ["quizData"],
     queryFn: () =>
       fetch(
-        "https://s1-24-id608001-project-squigggggle.onrender.com/api/v1/quiz",
+        `${API_URL}/api/v1/quiz`,
       ).then((res1) => res1.json()),
   });
 
@@ -18,10 +20,10 @@ const Quiz = () => {
     queryKey: ["userData"],
     queryFn: () =>
       fetch(
-        "https://s1-24-id608001-project-squigggggle.onrender.com/api/v1/user/current",
+        `${API_URL}/api/v1/user/current`,
         {
           headers: {
-            Authorization: `${localStorage.getItem("token")}`,
+            Authorization: token,
           },
         },
       ).then((res2) => res2.json()),
@@ -33,7 +35,7 @@ const Quiz = () => {
 
   return (
     <>
-    {userData && userData.data ? (userData.data.role == "ADMIN_USER" ? <QuizForm /> : null ) : null}
+      {userData && userData.data ? (userData.data.role == "ADMIN_USER" ? <QuizForm /> : null ) : null}
       {quizData.msg ? (
         <div>{quizData.msg}</div>
       ) : (
