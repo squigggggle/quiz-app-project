@@ -57,8 +57,15 @@ const QuizForm = () => {
     const handleQuizSubmit = (values) => {
         const startDate = new Date(values.startDate).toISOString(); 
         const endDate = new Date(values.endDate).toISOString(); 
-        postQuizMutation(...values, startDate, endDate);
+        postQuizMutation({...values, startDate, endDate});
     };
+
+    const today = new Date().toISOString().slice(0, 16);
+
+    const maxDate = new Date();
+    maxDate.setDate(maxDate.getDate() + 5);
+    const maxDateString = maxDate.toISOString().slice(0, 16);
+
     if(categoryLoading) return "Loading categories...";
 
     return (
@@ -67,7 +74,7 @@ const QuizForm = () => {
             <form onSubmit={quizForm.handleSubmit(handleQuizSubmit)}>
                 <label htmlFor="quiz-categoryId">Category</label>
                 <select id="quiz-categoryId" name="categoryId" {...quizForm.register("categoryId")}>
-                    {categoryData.trivia_categories.map((category) => (
+                    {categoryData.data.map((category) => (
                         <option key={category.id} value={category.id}>
                             {category.name}
                         </option>
@@ -76,18 +83,23 @@ const QuizForm = () => {
                 <label htmlFor="quiz-name">Quiz Name</label>
                 <input type="text" id="quiz-name" name="name" {...quizForm.register("name")} />
                 <label htmlFor="quiz-difficulty">Difficulty</label>
-                <select id="quiz-difficulty" name="difficulty">
+                <select id="quiz-difficulty" name="difficulty" {...quizForm.register("difficulty")}>
                     <option value="easy">Easy</option>
                     <option value="medium">Medium</option>
                     <option value="hard">Hard</option>
                 </select>
                 <label htmlFor="quiz-type">Type</label>
-                <select id="quiz-type" name="type">
+                <select id="quiz-type" name="type" {...quizForm.register("type")}>
                     <option value="multiple">Multiple Choice</option>
                     <option value="boolean">True/False</option>
                 </select>
-                {/* put startdate and end date */}
+                <label htmlFor="quiz-startDate">Start Date</label>
+                <input type="datetime-local" id="quiz-startDate" {...quizForm.register("startDate")} min={today.replace('Z', '')} max={maxDateString.replace('Z', '')} />
+                <label htmlFor="quiz-endDate">End Date</label>
+                <input type="datetime-local" id="quiz-endDate" {...quizForm.register("endDate")} min={today.replace('Z', '')} max={maxDateString.replace('Z', '')} />
+                <button type="submit">Create Quiz</button>
             </form>
+            <p>{quizData?.msg}</p>
         </>
     );
 };
