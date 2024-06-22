@@ -78,7 +78,8 @@ const getQuizzes = async (req, res) => {
   try {
     const quizzes = await prisma.quiz.findMany({
       include:{
-        questions:true
+        questions:true,
+        category:true,
       }
     });
 
@@ -106,6 +107,7 @@ const pastQuizzes = async (req, res) => {
       },
       include:{
         questions:true,
+        category:true
       }
     });
 
@@ -136,6 +138,7 @@ const currentQuizzes = async (req, res) => {
       },
       include:{
         questions:true,
+        category:true,
       }
     });
 
@@ -163,6 +166,7 @@ const futureQuizzes = async (req, res) => {
       },
       include:{
         questions:true,
+        category:true,
       }
     });
 
@@ -183,7 +187,8 @@ const getQuiz = async (req, res) => {
     const quiz = await prisma.quiz.findUnique({
       where: { id: Number(req.params.id) },
       include: {
-        questions:true
+        questions:true,
+        category:true,
       }
     });
 
