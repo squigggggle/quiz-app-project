@@ -1,21 +1,13 @@
 import { queryClient } from "../../main";
 
-import { useForm, useWatch } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
 const UpdateForm = () => {
   const updateForm = useForm();
-
-  const {
-    register,
-    watch,
-    formState: { errors },
-  } = updateForm;
-
-  const password = watch("password");
-
+  
   // I used chatgpt for this
   // prompt: I want the body to dynamically fill with my form fields if there is something being sent in them for my react hook form
   const constructRequestBody = (user) => {
