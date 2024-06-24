@@ -7,11 +7,15 @@ import {
   deleteUser,
 } from "../../controllers/v1/user.js";
 
+import { validatePutBasicUser } from "../../middleware/userPutValidation.js";
+
 const router = express.Router();
 
 router.get("/", getUsers);
 router.get("/current", getUser);
-router.put("/:id", updateUser);
+router.get("/:id", getUser);
+router.put("/", validatePutBasicUser, updateUser);
+router.put("/:id", validatePutBasicUser, updateUser);
 router.delete("/:id", deleteUser);
 
 export default router;
