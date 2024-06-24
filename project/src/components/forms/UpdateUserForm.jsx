@@ -8,6 +8,10 @@ const API_URL = import.meta.env.VITE_API_URL;
 const UpdateForm = () => {
   const updateForm = useForm();
 
+  const { register, watch, formState: { errors } } = updateForm;
+
+  const password = watch("password");
+
   const { mutate: postUpdateMutation, data: updateData } = useMutation({
     mutationFn: (user) =>
       fetch(
@@ -87,13 +91,20 @@ const UpdateForm = () => {
           name="password"
           {...updateForm.register("password")}
         />
+        {/* yeah I used chatgpt for this section 
+        prompt: "I want confirm password to be mandatory but only if password field was attempted to be sent in react hook form"*/}
         <label htmlFor="update-confirmPassword">Confirm Password</label>
         <input 
-            type="password"
-            id="update-confirmPassword"
-            name="confirmPassword" 
-            {...updateForm.register('confirmPassword')}
+          type="password"
+          id="update-confirmPassword"
+          name="confirmPassword" 
+          {...register("confirmPassword", {
+            required: "Confirm Password is required when Password is provided",
+            validate: (value) =>
+              value === password || "Passwords do not match"
+          })}
         />
+        {errors.confirmPassword && <p>{errors.confirmPassword.message}</p>}
         <button type="submit">Submit</button>
       </form>
       <p>{updateData?.msg}</p>
