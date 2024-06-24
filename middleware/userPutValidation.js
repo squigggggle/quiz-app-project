@@ -49,6 +49,9 @@ const validatePutBasicUser = (req, res, next) => {
     // also not stolen from here https://stackoverflow.com/questions/29827082/hapi-route-joi-validation-of-password-confirmation
     confirmPassword: Joi.any().valid(Joi.ref("password")).messages({
       "any.only": "Password must match",
+    }).when("password", {
+      is: Joi.exist(),
+      then: Joi.required()
     }),
   });
 
