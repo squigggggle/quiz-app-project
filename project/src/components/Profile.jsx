@@ -35,6 +35,9 @@ const Profile = () => {
       ) : isOpen ? <UpdateForm /> : (
         <>
           <h1>Profile</h1>
+          <img src={userData.data.avatar} alt="Profile Avatar" />
+          <p>First Name: {userData.data.firstName}</p>
+          <p>Last Name: {userData.data.lastName}</p>
           <p>Username: {userData.data.username}</p>
           <p>Email: {userData.data.email}</p>
           {userData.data.role == "ADMIN_USER" ? (
