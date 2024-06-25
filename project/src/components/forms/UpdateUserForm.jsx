@@ -95,7 +95,7 @@ const UpdateForm = () => {
           type="password"
           id="update-confirmPassword"
           name="confirmPassword"
-          {...register("confirmPassword")}
+          {...updateForm.register("confirmPassword")}
         />
         <button type="submit">Submit</button>
       </form>
