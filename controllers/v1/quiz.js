@@ -11,7 +11,7 @@ const createQuiz = async (req, res) => {
         msg: "Invalid Content-Type. Expected application/json",
       });
     }
-    
+
     const { categoryId, name, type, difficulty, startDate, endDate } = req.body;
 
     const { id } = req.user;
@@ -28,10 +28,12 @@ const createQuiz = async (req, res) => {
       });
     }
 
-    let quizJson = await axios.get(`https://opentdb.com/api.php?amount=10&category=${categoryId}&type=${type}&difficulty=${difficulty}`);
+    let quizJson = await axios.get(
+      `https://opentdb.com/api.php?amount=10&category=${categoryId}&type=${type}&difficulty=${difficulty}`,
+    );
     let quizData = quizJson.data.results;
     let quizArray = Array.isArray(quizData) ? quizData : [];
-   
+
     const questions = [];
     quizArray.forEach((quiz) => {
       questions.push({
@@ -59,7 +61,7 @@ const createQuiz = async (req, res) => {
           }),
         },
       },
-    })
+    });
 
     const newQuizzes = await prisma.quiz.findMany({});
 
@@ -77,10 +79,10 @@ const createQuiz = async (req, res) => {
 const getQuizzes = async (req, res) => {
   try {
     const quizzes = await prisma.quiz.findMany({
-      include:{
-        questions:true,
-        category:true,
-      }
+      include: {
+        questions: true,
+        category: true,
+      },
     });
 
     if (quizzes.length === 0) {
@@ -105,23 +107,23 @@ const pastQuizzes = async (req, res) => {
           lt: currentDate,
         },
       },
-      include:{
-        questions:true,
-        category:true
-      }
+      include: {
+        questions: true,
+        category: true,
+      },
     });
 
     if (pastQuizzes.length === 0) {
-      return res.status(404).json({msg: "No quizzes found" });
+      return res.status(404).json({ msg: "No quizzes found" });
     }
 
-    return res.json({data: pastQuizzes})
-  } catch(err){
+    return res.json({ data: pastQuizzes });
+  } catch (err) {
     return res.status(500).json({
       msg: err.message,
     });
   }
-}
+};
 
 const currentQuizzes = async (req, res) => {
   try {
@@ -136,23 +138,23 @@ const currentQuizzes = async (req, res) => {
           lte: currentDate,
         },
       },
-      include:{
-        questions:true,
-        category:true,
-      }
+      include: {
+        questions: true,
+        category: true,
+      },
     });
 
     if (currentQuizzes.length === 0) {
-      return res.status(404).json({msg: "No quizzes found" });
+      return res.status(404).json({ msg: "No quizzes found" });
     }
 
-    return res.json({data: currentQuizzes})
-  } catch(err){
+    return res.json({ data: currentQuizzes });
+  } catch (err) {
     return res.status(500).json({
       msg: err.message,
     });
   }
-}
+};
 
 const futureQuizzes = async (req, res) => {
   try {
@@ -164,32 +166,32 @@ const futureQuizzes = async (req, res) => {
           gt: currentDate,
         },
       },
-      include:{
-        questions:true,
-        category:true,
-      }
+      include: {
+        questions: true,
+        category: true,
+      },
     });
 
     if (futureQuizzes.length === 0) {
-      return res.status(404).json({msg: "No quizzes found" });
+      return res.status(404).json({ msg: "No quizzes found" });
     }
 
-    return res.json({data: futureQuizzes})
-  } catch(err){
+    return res.json({ data: futureQuizzes });
+  } catch (err) {
     return res.status(500).json({
       msg: err.message,
     });
   }
-}
+};
 
 const getQuiz = async (req, res) => {
   try {
     const quiz = await prisma.quiz.findUnique({
       where: { id: Number(req.params.id) },
       include: {
-        questions:true,
-        category:true,
-      }
+        questions: true,
+        category: true,
+      },
     });
 
     if (!quiz) {

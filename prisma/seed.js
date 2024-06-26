@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import bcryptjs from "bcryptjs"; 
+import bcryptjs from "bcryptjs";
 const prisma = new PrismaClient();
 
 const main = async () => {
@@ -44,11 +44,12 @@ const main = async () => {
       password: "M1ch@elP@ss12",
       role: "ADMIN_USER",
     },
-  ]
+  ];
   try {
     data.forEach((user) => {
       // Set the user's avatar based off their username
-      const avatarLink = "https://api.dicebear.com/8.x/lorelei/svg?seed=" + user.username;
+      const avatarLink =
+        "https://api.dicebear.com/8.x/lorelei/svg?seed=" + user.username;
       user.avatar = avatarLink;
       //Create a salt using bcryptjs.genSaltSync()
       const salt = bcryptjs.genSaltSync();
@@ -60,8 +61,8 @@ const main = async () => {
 
     // Call the createMany method on the Prisma client and pass in the data
     await prisma.user.createMany({
-      data: data
-    })
+      data: data,
+    });
   } catch (err) {
     console.error(err);
   } finally {

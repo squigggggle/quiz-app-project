@@ -1,6 +1,6 @@
 import { queryClient } from "../../main";
 import { useForm } from "react-hook-form";
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -9,20 +9,17 @@ const LoginForm = () => {
 
   const { mutate: postLoginMutation, data: loginData } = useMutation({
     mutationFn: (user) =>
-      fetch(
-        `${API_URL}/api/v1/auth/login`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: user.email,
-            username: user.username,
-            password: user.password,
-          }),
+      fetch(`${API_URL}/api/v1/auth/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-      ).then((res) => {
+        body: JSON.stringify({
+          email: user.email,
+          username: user.username,
+          password: user.password,
+        }),
+      }).then((res) => {
         if (res.status === 200) {
           loginForm.reset((formValues) => ({
             ...formValues,

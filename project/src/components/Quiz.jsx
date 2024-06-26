@@ -8,23 +8,17 @@ const API_URL = import.meta.env.VITE_API_URL;
 const Quiz = () => {
   const { isLoading: quizLoading, data: quizData } = useQuery({
     queryKey: ["quizData"],
-    queryFn: () =>
-      fetch(
-        `${API_URL}/api/v1/quiz`,
-      ).then((res) => res.json()),
+    queryFn: () => fetch(`${API_URL}/api/v1/quiz`).then((res) => res.json()),
   });
 
   const { isLoading: userLoading, data: userData } = useQuery({
     queryKey: ["userData"],
     queryFn: () =>
-      fetch(
-        `${API_URL}/api/v1/user/current`,
-        {
-          headers: {
-            Authorization: `${localStorage.getItem("token")}`,
-          },
+      fetch(`${API_URL}/api/v1/user/current`, {
+        headers: {
+          Authorization: `${localStorage.getItem("token")}`,
         },
-      ).then((res) => res.json()),
+      }).then((res) => res.json()),
     enabled: !!`${localStorage.getItem("token")}` && !quizLoading && !!quizData,
   });
 
@@ -33,7 +27,13 @@ const Quiz = () => {
 
   return (
     <>
-      {userData?.data ? (userData.data.role == "ADMIN_USER" ? <QuizForm /> : null) : userData?.msg === "No token provided" ? null : <p>{userData.msg}</p>}
+      {userData?.data ? (
+        userData.data.role == "ADMIN_USER" ? (
+          <QuizForm />
+        ) : null
+      ) : userData?.msg === "No token provided" ? null : (
+        <p>{userData.msg}</p>
+      )}
       {quizData.msg ? (
         <div>{quizData.msg}</div>
       ) : (

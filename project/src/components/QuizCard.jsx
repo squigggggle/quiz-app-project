@@ -16,14 +16,12 @@ const QuizCard = (props) => {
           <CardDescription>Difficulty: {props.difficulty}</CardDescription>
           <CardDescription>Type: {props.type}</CardDescription>
         </CardHeader>
-        <CardContent>
-          {props.category}
-        </CardContent>
+        <CardContent>{props.category}</CardContent>
         <CardFooter>
-            <ul>
-                <li>Starts: {props.startdate}</li>
-                <li>Ends: {props.enddate}</li>
-            </ul>
+          <ul>
+            <li>Starts: {props.startdate}</li>
+            <li>Ends: {props.enddate}</li>
+          </ul>
         </CardFooter>
       </Card>
     </>
