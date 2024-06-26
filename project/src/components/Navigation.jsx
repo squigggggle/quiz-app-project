@@ -1,3 +1,9 @@
+
+/**
+ * @file This file contains the Navigation component which handles the navigation menu and routing in the application.
+ * @author Jack Young
+ */
+
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import {
   navigationMenuTriggerStyle,

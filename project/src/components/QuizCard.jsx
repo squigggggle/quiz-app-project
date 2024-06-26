@@ -1,3 +1,8 @@
+/**
+ * @file A React component that represents a quiz card.
+ * @author Jack Young
+ */
+
 import {
   Card,
   CardContent,

@@ -1,3 +1,8 @@
+
+/**
+ * @file This file contains the routes for managing quizzes.
+ * @author Jack Young
+ */
 import express from "express";
 import authRouteMiddleware from "../../middleware/authRoute.js";
 import { validatePostQuiz } from "../../middleware/quizValidation.js";

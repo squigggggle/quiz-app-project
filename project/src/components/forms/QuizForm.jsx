@@ -1,3 +1,9 @@
+/**
+ * @file QuizForm.jsx
+ * @description This file contains the implementation of the QuizForm component.
+ * @author Jack Young
+ */
+
 import { queryClient } from "../../main";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";

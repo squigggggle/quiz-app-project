@@ -1,3 +1,8 @@
+/**
+ * @file Profile component that displays user profile information and allows updating the profile.
+ * @author Jack Young
+ */
+
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 
