@@ -1,7 +1,7 @@
 describe("Tests", () => {
   before(() => {
     cy.task('resetDatabase');
-
+    cy.wait(2000);
     cy.request("http://localhost:3000/api/v1/categories/seed");
     cy.wait(2000);
   });
@@ -59,5 +59,16 @@ describe("Tests", () => {
     .click();
     cy.wait(2000);
     cy.contains("Quiz successfully created");
+  })
+
+  it("should login as a basic user", () => {
+    cy.visit("http://localhost:5173/login");
+    cy.get('input#login-email').type("biggamer@email.com");
+    cy.get('input#login-password').type("BigGamer1!");
+    cy.get('button')
+    .contains("Submit")
+    .click();
+    cy.wait(2000);
+    cy.contains("User successfully logged in")
   })
 });
