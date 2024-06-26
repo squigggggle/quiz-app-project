@@ -9,7 +9,7 @@ export default defineConfig({
       on('task', {
         async resetDatabase() {
           try {
-            const { stdout, stderr } = await execPromise('cd../ && npx prisma migrate reset --force && npx prisma db seed');
+            const { stdout, stderr } = await execPromise('cd../ && npx prisma migrate reset --force');
             if (stderr) {
               console.error('Error output:', stderr);
             }
