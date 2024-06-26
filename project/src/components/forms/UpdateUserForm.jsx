@@ -7,7 +7,7 @@ const API_URL = import.meta.env.VITE_API_URL;
 
 const UpdateForm = () => {
   const updateForm = useForm();
-  
+
   // I used chatgpt for this
   // prompt: I want the body to dynamically fill with my form fields if there is something being sent in them for my react hook form
   const constructRequestBody = (user) => {
@@ -44,7 +44,7 @@ const UpdateForm = () => {
         }
         return res.json();
       }),
-    onSuccess: (data) => {
+    onSuccess: () => {
       queryClient.invalidateQueries("userData");
     },
   });

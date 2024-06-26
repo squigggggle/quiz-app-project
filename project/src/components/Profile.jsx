@@ -10,19 +10,16 @@ const Profile = () => {
   const { isLoading, data: userData } = useQuery({
     queryKey: ["userData"],
     queryFn: () =>
-      fetch(
-        `${API_URL}/api/v1/user/current`,
-        {
-          headers: {
-            Authorization: `${localStorage.getItem("token")}`,
-          },
+      fetch(`${API_URL}/api/v1/user/current`, {
+        headers: {
+          Authorization: `${localStorage.getItem("token")}`,
         },
-      ).then((res) => res.json()),
+      }).then((res) => res.json()),
   });
 
   const toggleUpdate = () => {
     setIsOpen(!isOpen);
-  }
+  };
 
   if (isLoading) return "Loading...";
 
@@ -32,7 +29,9 @@ const Profile = () => {
         <div>
           <p>{userData.msg}</p>
         </div>
-      ) : isOpen ? <UpdateForm /> : (
+      ) : isOpen ? (
+        <UpdateForm />
+      ) : (
         <>
           <h1>Profile</h1>
           <img src={userData.data.avatar} alt="Profile Avatar" />
