@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0 --fix",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "pretty-quick": "pretty-quick --staged"
   },
   "dependencies": {
     "class-variance-authority": "^0.7.0",
@@ -32,6 +33,7 @@
     "eslint-plugin-react-refresh": "^0.4.6",
     "postcss": "^8.4.38",
     "prettier": "^3.3.2",
+    "pretty-quick": "^4.0.0",
     "tailwindcss": "^3.4.4",
     "vite": "^5.2.0"
   }

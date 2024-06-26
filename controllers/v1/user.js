@@ -42,9 +42,7 @@ const getUser = async (req, res) => {
     });
 
     if (!user) {
-      return res
-        .status(404)
-        .json({ msg: `No user with the id: ${id} found` });
+      return res.status(404).json({ msg: `No user with the id: ${id} found` });
     }
 
     return res.json({
@@ -66,10 +64,8 @@ const updateUser = async (req, res) => {
       });
     }
 
-    const { firstName, lastName, username, email, password } =
-      req.body;
+    const { firstName, lastName, username, email, password } = req.body;
 
-      
     let id = req.params.id;
 
     if (!id) {
@@ -87,28 +83,26 @@ const updateUser = async (req, res) => {
     }
 
     if (!user) {
-      return res
-        .status(404)
-        .json({ msg: `No user with the id: ${id} found` });
+      return res.status(404).json({ msg: `No user with the id: ${id} found` });
     }
 
     let hashedPassword;
-    
-    if (password){
-      const salt = await bcryptjs.genSalt();
-      hashedPassword = await bcryptjs.hash(password, salt)
-    }
 
-    
+    if (password) {
+      const salt = await bcryptjs.genSalt();
+      hashedPassword = await bcryptjs.hash(password, salt);
+    }
 
     // https://stackoverflow.com/questions/69526209/prisma-how-can-i-update-only-some-of-the-models-fields-in-update
     user = await prisma.user.update({
       where: { id: id },
-      data: { firstName: firstName || undefined, 
-        lastName: lastName || undefined, 
-        username: username || undefined, 
-        email: email || undefined, 
-        password: hashedPassword || undefined },
+      data: {
+        firstName: firstName || undefined,
+        lastName: lastName || undefined,
+        username: username || undefined,
+        email: email || undefined,
+        password: hashedPassword || undefined,
+      },
     });
 
     // delete user.password;
@@ -136,13 +130,13 @@ const deleteUser = async (req, res) => {
     if (currentUser.id == user.id) {
       return res
         .status(403)
-        .json({ msg: `Deleting your account is not allowed` })
+        .json({ msg: `Deleting your account is not allowed` });
     }
 
     if (user.role == "ADMIN_USER") {
       return res
         .status(403)
-        .json({ msg: `Deleting an admin account is not allowed` })
+        .json({ msg: `Deleting an admin account is not allowed` });
     }
 
     if (!user) {

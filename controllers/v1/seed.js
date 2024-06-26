@@ -17,12 +17,13 @@ const seedBasicUsers = async (req, res) => {
     }
 
     const data = await axios.get(
-      "https://gist.githubusercontent.com/Grayson-Orr/693f8678c4cdca98c03a2729f8352ec5/raw"
+      "https://gist.githubusercontent.com/Grayson-Orr/693f8678c4cdca98c03a2729f8352ec5/raw",
     );
 
     data.data.forEach((user) => {
       // Set the user's avatar based off their username
-      const avatarLink = "https://api.dicebear.com/8.x/lorelei/svg?seed=" + user.username;
+      const avatarLink =
+        "https://api.dicebear.com/8.x/lorelei/svg?seed=" + user.username;
       user.avatar = avatarLink;
       // Create a salt using bcryptjs.genSaltSync()
       const salt = bcryptjs.genSaltSync();
@@ -34,8 +35,8 @@ const seedBasicUsers = async (req, res) => {
 
     // Call the createMany method on the Prisma client and pass in the data
     await prisma.user.createMany({
-      data: data.data
-    })
+      data: data.data,
+    });
 
     return res
       .status(201)
@@ -70,6 +71,6 @@ const seedCategories = async (req, res) => {
       msg: err.message,
     });
   }
- };
+};
 
 export { seedBasicUsers, seedCategories };

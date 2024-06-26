@@ -47,12 +47,15 @@ const validatePutBasicUser = (req, res, next) => {
           "Password must have at least one letter, one number and one special character",
       }),
     // also not stolen from here https://stackoverflow.com/questions/29827082/hapi-route-joi-validation-of-password-confirmation
-    confirmPassword: Joi.any().valid(Joi.ref("password")).messages({
-      "any.only": "Password must match",
-    }).when("password", {
-      is: Joi.exist(),
-      then: Joi.required()
-    }),
+    confirmPassword: Joi.any()
+      .valid(Joi.ref("password"))
+      .messages({
+        "any.only": "Password must match",
+      })
+      .when("password", {
+        is: Joi.exist(),
+        then: Joi.required(),
+      }),
   });
 
   const { error } = userSchema.validate(req.body);
