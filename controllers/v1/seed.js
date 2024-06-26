@@ -1,3 +1,11 @@
+/**
+ * @file This file contains the implementation of the seed functions for basic users and categories.
+ * It imports axios, bcryptjs, and PrismaClient from external libraries.
+ * The seedBasicUsers function creates basic users by fetching data from an external API and using bcryptjs to hash passwords.
+ * The seedCategories function seeds categories by fetching data from an external API and creating category records in the database.
+ * @author Jack Young
+ */
+
 import axios from "axios";
 import bcryptjs from "bcryptjs";
 import { PrismaClient } from "@prisma/client";

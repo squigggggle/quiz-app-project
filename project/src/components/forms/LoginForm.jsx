@@ -1,3 +1,9 @@
+/**
+ * @file LoginForm.jsx
+ * @description This file contains the LoginForm component, which is used for user login functionality.
+ * @author Jack Young
+ */
+
 import { queryClient } from "../../main";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";

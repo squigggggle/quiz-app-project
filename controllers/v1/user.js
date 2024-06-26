@@ -1,3 +1,8 @@
+/**
+ * @file This file contains the controller functions for user-related operations.
+ * @author Jack Young
+ */
+
 import bcryptjs from "bcryptjs";
 import { PrismaClient } from "@prisma/client";
 

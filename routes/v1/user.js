@@ -1,3 +1,8 @@
+/**
+ * @file This file contains the routes for user-related operations.
+ * @author Jack Young
+ */
+
 import express from "express";
 
 import {

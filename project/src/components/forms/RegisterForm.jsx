@@ -1,3 +1,9 @@
+/**
+ * @file RegisterForm.jsx
+ * @description This file contains the implementation of the RegisterForm component.
+ * @author Jack Young
+ */
+
 import { queryClient } from "../../main";
 
 import { useForm } from "react-hook-form";

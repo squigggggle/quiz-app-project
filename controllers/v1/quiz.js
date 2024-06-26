@@ -1,3 +1,8 @@
+/**
+ * @file This file contains the controller functions for quiz management.
+ * @author Jack Young
+ */
+
 import { PrismaClient } from "@prisma/client";
 import axios from "axios";
 

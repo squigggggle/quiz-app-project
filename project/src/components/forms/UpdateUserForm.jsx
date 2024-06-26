@@ -1,3 +1,8 @@
+/**
+ * @file UpdateUserForm.jsx
+ * @description This file contains the UpdateUserForm component, which is responsible for rendering a form to update user information.
+ * @author Jack Young
+ */
 import { queryClient } from "../../main";
 
 import { useForm } from "react-hook-form";

@@ -1,3 +1,9 @@
+/**
+ * @file Quiz.jsx
+ * @description This file contains the Quiz component, which displays quizzes and user information.
+ * @author Jack Young
+ */
+
 import { useQuery } from "@tanstack/react-query";
 import { useState, useEffect } from "react";
 import QuizCard from "./QuizCard";
