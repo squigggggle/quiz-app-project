@@ -1,12 +1,12 @@
 export const apiData = [
-    // {
-    //     title: "",
-    //     description: "",
-    //     method: "",
-    //     url: "",
-    //     requestBody: {},
-    //     responseBody: {},
-    //   }
+  // {
+  //     title: "",
+  //     description: "",
+  //     method: "",
+  //     url: "",
+  //     requestBody: {},
+  //     responseBody: {},
+  //   }
   {
     title: "Register Basic User",
     description: "Register a new user.",
@@ -46,15 +46,15 @@ export const apiData = [
     method: "POST",
     url: "/api/v1/quiz/",
     requestBody: {
-        categoryId: "integer",
-        name: "string",
-        difficulty: "difficulty",
-        type: "type",
-        startDate: "YYYY-MM-DDThh:mm:ss.sssZ"
+      categoryId: "integer",
+      name: "string",
+      difficulty: "difficulty",
+      type: "type",
+      startDate: "YYYY-MM-DDThh:mm:ss.sssZ",
     },
     responseBody: {
-        msg: "Quiz successfully created",
-        data: "object"
+      msg: "Quiz successfully created",
+      data: "object",
     },
-  }
+  },
 ];
